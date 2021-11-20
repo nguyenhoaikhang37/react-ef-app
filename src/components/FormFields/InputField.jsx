@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Controller } from 'react-hook-form';
 
 const InputField = ({ form, name, label, disabled }) => {
-  const { errors, formState } = form;
-  const hasError = Boolean(formState.touched[name] && errors[name]);
+  const { errors } = form;
+  const hasError = errors[name];
 
   return (
     <Controller

@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
 import productApi from './apis/productApi';
 import Todo from './features/Todo';
-import { Route, Switch, Redirect, Link } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import Counter from './features/Counter';
 import Header from './components/Header';
+import NotFound from './components/NotFound';
+import Product from './features/Product';
 
 function App() {
   useEffect(() => {
@@ -21,8 +23,12 @@ function App() {
       <Header />
       <Switch>
         <Redirect from="/" to="/todos" exact />
+
         <Route path="/todos" component={Todo}></Route>
         <Route path="/counter" component={Counter}></Route>
+        <Route path="/products" component={Product}></Route>
+
+        <Route path="*" component={NotFound}></Route>
       </Switch>
     </div>
   );

@@ -1,4 +1,4 @@
-import { IconButton, Menu, MenuItem } from '@material-ui/core';
+import { IconButton, Menu, MenuItem, Box } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
@@ -14,6 +14,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Login from '../../features/Auth/components/Login';
 import Register from '../../features/Auth/components/Register';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../features/Auth/userSlice';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,8 +48,15 @@ const MODE = {
 };
 
 export default function Header() {
+  const dispatch = useDispatch();
+
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+  const [mode, setMode] = useState(MODE.LOGIN);
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const loggedInUser = useSelector((state) => state.user.current);
+  const isLogged = Boolean(loggedInUser.id);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -55,6 +64,19 @@ export default function Header() {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleClickUser = (e) => {
+    setAnchorEl(e.currentTarget);
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogoutClick = () => {
+    dispatch(logout());
+    setAnchorEl(null);
   };
 
   return (
@@ -74,22 +96,64 @@ export default function Header() {
             <Button color="inherit">Counter</Button>
           </NavLink>
 
-          <Button color="inherit" onClick={handleClickOpen}>
-            Register
-          </Button>
+          {!isLogged && (
+            <Button color="inherit" onClick={handleClickOpen}>
+              Login
+            </Button>
+          )}
 
-          <IconButton color="inherit">
-            <AccountCircle />
-          </IconButton>
+          {isLogged && (
+            <IconButton color="inherit" onClick={handleClickUser}>
+              <AccountCircle />
+            </IconButton>
+          )}
         </Toolbar>
       </AppBar>
+
+      <Menu
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleCloseMenu}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        getContentAnchorEl={null}
+      >
+        <MenuItem>My account</MenuItem>
+        <MenuItem onClick={handleLogoutClick}>Logout</MenuItem>
+      </Menu>
 
       <Dialog disableEscapeKeyDown open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <IconButton>
           <Close className={classes.closeBtn} onClick={handleClose}></Close>
         </IconButton>
         <DialogContent>
-          <Register />
+          {mode === MODE.REGISTER && (
+            <>
+              <Register closeDialog={handleClose} />
+              <Box textAlign="center">
+                <Button onClick={() => setMode(MODE.LOGIN)} color="primary">
+                  Already have an account. Login here
+                </Button>
+              </Box>
+            </>
+          )}
+          {mode === MODE.LOGIN && (
+            <>
+              <Login closeDialog={handleClose} />
+              <Box textAlign="center">
+                <Button onClick={() => setMode(MODE.REGISTER)} color="primary">
+                  Don't have an account. Register here
+                </Button>
+              </Box>
+            </>
+          )}
         </DialogContent>
       </Dialog>
     </div>
