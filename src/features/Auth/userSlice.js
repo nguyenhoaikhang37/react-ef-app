@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import userApi from '../../apis/userApi';
-import StorageKeys from '../../constants.js/storage-keys';
+import { StorageKeys } from '../../constants';
 
 export const login = createAsyncThunk('user/login', async (payload) => {
   // call API to login

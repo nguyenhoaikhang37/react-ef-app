@@ -1,26 +1,15 @@
-import { useEffect } from 'react';
-import productApi from './apis/productApi';
-import Todo from './features/Todo';
-import { Route, Switch, Redirect } from 'react-router-dom';
-import Counter from './features/Counter';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import Header from './components/Header';
 import NotFound from './components/NotFound';
+import Counter from './features/Counter';
 import Product from './features/Product';
+import Todo from './features/Todo';
 
 function App() {
-  useEffect(() => {
-    (async () => {
-      const params = {
-        _limit: 10,
-      };
-      const res = await productApi.getAll(params);
-      console.log(res);
-    })();
-  }, []);
-
   return (
     <div className="App">
       <Header />
+
       <Switch>
         <Redirect from="/" to="/todos" exact />
 
