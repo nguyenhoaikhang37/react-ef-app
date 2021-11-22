@@ -11,7 +11,7 @@ function App() {
       <Header />
 
       <Switch>
-        <Redirect from="/" to="/todos" exact />
+        <Redirect from="/" to="/products" exact />
 
         <Route path="/todos" component={Todo}></Route>
         <Route path="/counter" component={Counter}></Route>

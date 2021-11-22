@@ -10,7 +10,7 @@ const Product = () => {
     <Box pt={4}>
       <Switch>
         <Route path={match.url} exact component={ListPage} />
-        <Route path={`${match.url}/:id`} exact component={DetailPage} />
+        <Route path={`${match.url}/:productId`} component={DetailPage} />
       </Switch>
     </Box>
   );

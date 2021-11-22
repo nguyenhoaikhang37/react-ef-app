@@ -89,12 +89,12 @@ export default function Header() {
               NHK Shop
             </Link>
           </Typography>
-          <NavLink activeClassName={classes.activeLink} className={classes.link} to="/todos">
+          {/* <NavLink activeClassName={classes.activeLink} className={classes.link} to="/todos">
             <Button color="inherit">Todos</Button>
           </NavLink>
           <NavLink activeClassName={classes.activeLink} className={classes.link} to="/counter">
             <Button color="inherit">Counter</Button>
-          </NavLink>
+          </NavLink> */}
 
           {!isLogged && (
             <Button color="inherit" onClick={handleClickOpen}>

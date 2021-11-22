@@ -99,7 +99,6 @@ const ListPage = (props) => {
               <ProductFilters filters={filters} onChange={handleFiltersChange} />
             </Paper>
           </Grid>
-
           <Grid item className={classes.right}>
             <Paper elevation={0}>
               <ProductSort currentSort={filters._sort} onChange={handleSortChange} />

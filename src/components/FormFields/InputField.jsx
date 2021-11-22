@@ -10,14 +10,21 @@ const InputField = ({ form, name, label, disabled }) => {
     <Controller
       name={name}
       control={form.control}
-      as={TextField}
-      variant="outlined"
-      margin="normal"
-      fullWidth
-      label={label}
-      disabled={disabled}
-      error={hasError}
-      helperText={errors[name]?.message}
+      render={({ onChange, onBlur, value, name }) => (
+        <TextField
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          label={label}
+          disabled={disabled}
+          error={hasError}
+          helperText={errors[name]?.message}
+          name={name}
+          value={value}
+          onChange={onChange}
+          onBlur={onBlur}
+        />
+      )}
     />
   );
 };
